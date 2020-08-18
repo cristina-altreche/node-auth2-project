@@ -26,7 +26,7 @@ const sessionConfig = {
   }),
 };
 
-server.use(session(sessionConfig));
+// server.use(session(sessionConfig));
 server.use(express.json());
 server.use("/api/users", authenticate, usersRouter);
 server.use("/api/auth", authRouter);
