@@ -1,16 +1,20 @@
-const bcrypt = require("bcrypt")
-const router = require("express").Router()
-const Users = require("../users/users-model")
+const bcrypt = require("bcrypt");
+const router = require("express").Router();
+const Users = require("../users/users-model");
 
 router.post("/register", (req, res) => {
-    let credentials = req.body
-    const rounds = 4;
-    const hash = bcrypt.hashSync(credentials.password, rounds)
+  let credentials = req.body;
+  const rounds = 4;
+  const hash = bcrypt.hashSync(credentials.password, rounds);
 
-    credentials.password = hash
+  credentials.password = hash;
 
-    Users.add(credentials)
+  Users.add(credentials)
     .then((saved) => {
-        res.status(201).json({ data: saved})
+      res.status(201).json({ data: saved });
     })
-})
+    .catch((error) => {
+      res.status(500).json({ error: error.message });
+    });
+});
+
